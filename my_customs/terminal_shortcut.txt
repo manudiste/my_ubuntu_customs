@@ -1,0 +1,41 @@
+- Fonte:
+https://askubuntu.com/questions/680016/keyboard-shortcut-for-open-terminal-nautilus-3-16
+
+
+-Per aprire il terminale direttamente sulla directory corrente
+
+CTRL+J
+
+-Per configurare questa opzione, usare nautilus (installare prima):
+
+1) Creare uno script in shell nella directory
+
+cd ~/.local/share/nautilus/scripts
+
+sudo gedit Terminal
+
+- con il contenuto
+
+#! /bin/sh
+gnome-terminal
+
+2) Configurare lo shortkey: creare (o editare) nella directory
+
+cd ~/.config/nautilus
+
+gedit scripts-accells
+
+-con il contenuto
+
+<Control><Alt>J Terminal
+; Commented lines must have a space after the semicolon
+; After changing the shortkey, restart nautilus with
+; nautilus -q
+; 
+; Examples of other key combinations:
+; <Control>F12 Terminal
+; <Alt>F12 Terminal
+; <Shift>F12 Terminal
+
+Infine, riavviare nautilus config
+nautilus -q

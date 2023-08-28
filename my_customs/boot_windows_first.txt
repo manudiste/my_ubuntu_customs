@@ -1,0 +1,15 @@
+IF GRUB menu doesn't already show on boot, hold down the LEFT SHIFT key from cold boot and the GRUB menu should appear. You can select which OS to boot from there. (normal GRUB selection process).
+
+
+
+If you'd like to make Windows the default OS, you need to first start Ubuntu and on its terminal, you can type:
+
+sudo -H gedit /etc/default/grub
+
+You'll see some of GRUB's settings near the top of the file. Just change the line GRUB_DEFAULT=0. This selects which item in the GRUB menu is the default boot OS.
+
+Change the 0 to a 1 or 2 or 3... (0 equals first, 1 equals second and so on). Do a GRUB update by typing:
+
+sudo update-grub
+
+Now restart and the selected OS will show as highlighted and then start automatically.

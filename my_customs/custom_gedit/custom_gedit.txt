@@ -1,0 +1,92 @@
+- E' possibile colorare qualsivoglia parola chiave
+di un dato file *.c (o altri linguaggi), tramite gedit (e forse anche pluma)
+nella seguente maniera.
+
+1) Disporre di un file .xml: contiene il color scheme
+desiderato. La strada piu' veloce e' riciclarne uno gia' creato
+da qualcun'altro; uno comodo per me e' stato yaru-dark.xml.
+
+2) Modificando i parametri del file .xml si possono
+cambiare colori, bold, italics ecc.
+
+3) Per aggiungere parole chiave da colorare, bisogna
+ritoccare un file creato da GtkSourceView, chiamato
+c.lang: da terminale si puo' cercare facilmente
+
+locate gtksourceview | grep /c.lang
+
+- Esempio di output:
+
+/snap/gnome-3-28-1804/161/usr/share/gtksourceview-3.0/language-specs/c.lang
+/snap/gnome-3-28-1804/194/usr/share/gtksourceview-3.0/language-specs/c.lang
+/snap/gnome-3-38-2004/119/usr/share/gtksourceview-3.0/language-specs/c.lang
+/snap/gnome-3-38-2004/119/usr/share/gtksourceview-4/language-specs/c.lang
+/snap/gnome-3-38-2004/137/usr/share/gtksourceview-3.0/language-specs/c.lang
+/snap/gnome-3-38-2004/137/usr/share/gtksourceview-4/language-specs/c.lang
+/snap/gnome-42-2204/65/usr/share/gtksourceview-3.0/language-specs/c.lang
+/snap/gnome-42-2204/65/usr/share/gtksourceview-5/language-specs/c.lang
+/snap/gnome-42-2204/68/usr/share/gtksourceview-3.0/language-specs/c.lang
+/snap/gnome-42-2204/68/usr/share/gtksourceview-5/language-specs/c.lang
+/usr/share/gtksourceview-4/language-specs/c.lang
+
+- Andiamo nell'ultima directory (non so se le altre vadano bene, forse
+gedit utilizza solo quella presente in /usr/):
+
+cd /usr/share/gtksourceview-4/language-specs
+
+- Apriamo quindi c.lang con un text editor
+
+sudo gedit c.lang
+
+- E' importante aprire c.lang in root, altrimenti il file sara' aperto in
+modalita' read-only.
+- All'interno di tale file sara' possibile modificare, eliminare e aggiungere
+parole chiave di ogni tipo.
+- Se si vuole aggiungere una parola chiave, bisogna aggiungere delle righe
+in tre sezioni del file c.lang.
+
+- Esempio: vogliamo aggiungere malloc, calloc e free come parole chiavi.
+
+
+
+<language id="c" name="C" version="2.0" _section="Source">
+  <metadata>
+[...]
+  </metadata>
+
+  <styles>
+[...]
+                            <style id="malloc"            name="Malloc"                map-to="def:malloc"/>
+[...]
+  </styles>
+  <definitions>
+[...]
+                                          <context id="malloc" style-ref="malloc">
+                                            <keyword>malloc</keyword>
+                                            <keyword>calloc</keyword>
+                                            <keyword>free</keyword>
+                                          </context>
+[...]
+    <!--Main context-->
+    <context id="c" class="no-spell-check">
+      <include>
+[...]
+                                              <context ref="malloc"/>
+[...]
+      </include>
+    </context>
+
+  </definitions>
+</language>
+
+
+
+
+
+Fatto cio', le tre parole malloc, calloc, free saranno chiamate nel file
+.xml con la voce 
+
+  <style name="def:malloc"                 foreground="#FFFFFF" bold="true"/>
+
+- Per concludere, andare sulle preferenze di Gedit, quindi scegliere il .xml
+ritoccato come colour scheme.
